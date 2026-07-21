@@ -1,20 +1,25 @@
-// Arquivo obrigatório para a inicialização do Gradle.
-// Define onde o Gradle deve buscar as dependências do projeto e os módulos incluídos.
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+name: Build CatsBlock Phone APKon:push:branches: [ "main", "master" ]pull_request:branches: [ "main", "master" ]jobs:build:name: Build APK with Gradleruns-on: ubuntu-lateststeps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
 
-// O nome raiz do projeto foi definido conforme a especificação do aplicativo.
-rootProject.name = "CatsBlock Phone"
-include(":app")
+  - name: Set up JDK 17
+    uses: actions/setup-java@v3
+    with:
+      distribution: 'temurin'
+      java-version: '17'
+
+  - name: Setup Gradle
+    uses: gradle/actions/setup-gradle@v3
+
+  - name: Make Gradle executable
+    run: chmod +x ./gradlew
+
+  - name: Build Debug APK
+    run: ./gradlew assembleDebug
+
+  - name: Upload APK Artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: catsblock-phone-debug
+      path: app/build/outputs/apk/debug/app-debug.apk
+      
