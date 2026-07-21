@@ -1,5 +1,3 @@
-// Arquivo obrigatório para a inicialização do Gradle.
-// Define onde o Gradle deve buscar as dependências do projeto e os módulos incluídos.
 pluginManagement {
     repositories {
         google()
@@ -15,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-// O nome raiz do projeto foi definido conforme a especificação do aplicativo.
 rootProject.name = "CatsBlock Phone"
 include(":app")
