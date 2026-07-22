@@ -20,25 +20,19 @@ jobs:
         distribution: 'temurin'
         java-version: '18'
 
-    # 1. Este passo baixa o Gradle global apenas para gerar o wrapper que falta no seu projeto
-    - name: Setup Gradle (Global tool to generate wrapper)
+    # Removemos o bloqueio de versão fixa para que a action use e sincronize a estrutura correta do seu projeto
+    - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '8.5'
 
-    # 2. Comando crucial: Gera o gradle-wrapper.jar e atualiza as libs locais no repositório virtual do CI
+    # Força a criação limpa do Wrapper no diretório correto do projeto antes da compilação
     - name: Regenerate local Gradle Wrapper
-      run: gradle wrapper
+      run: gradle wrapper --gradle-version 8.5
 
-    # 3. Força a permissão de execução do script gerado
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # 4. Agora o ./gradlew original do projeto funcionará reconhecendo o "libs" do seu .toml
-    - name: Build with Gradle
-      run: ./gradlew build
-
-    - name: Build Debug APK
+    # Compila e gera o APK utilizando o wrapper recém-validado
+    - name: Build and Assemble APK
       run: ./gradlew assembleDebug
 
     - name: Upload APK Artifact
