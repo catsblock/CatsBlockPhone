@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.devtools.ksp) // Alterado para ler do seu libs.versions.toml
 }
 
 android {
@@ -53,23 +52,11 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    
-    // Corrigido: hífen trocado por ponto
     implementation(libs.androidx.activity.compose) 
-    
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    
-    // Corrigido: hífen trocado por ponto
     implementation(libs.androidx.ui.tooling.preview) 
-    
     implementation(libs.androidx.material3)
-    
-    // Corrigido: hífen trocado por ponto
     implementation(libs.androidx.navigation.compose) 
-    
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 }
