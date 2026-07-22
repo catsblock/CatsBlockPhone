@@ -20,19 +20,23 @@ jobs:
         distribution: 'temurin'
         java-version: '18'
 
-    # Instala o Gradle globalmente de forma limpa na máquina virtual
-    - name: Setup Gradle Global CLI
+    # Instala o Gradle de forma global para termos acesso ao comando de reparo
+    - name: Setup Gradle Environment
       uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.5' # Força uma versão compatível com catálogos de dependências modernos
 
-    # Gera a árvore do Wrapper original estruturando o Version Catalog (libs)
-    - name: Generate local Gradle Wrapper
-      run: gradle wrapper
+    # Cria manualmente a estrutura que está faltando antes de rodar o build
+    - name: Recreate missing Wrapper files
+      run: |
+        mkdir -p gradle/wrapper
+        gradle wrapper --gradle-version 8.5
 
-    # Garante a permissão de execução nativa do script gerado
+    # Concede permissão de execução ao script do repositório
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # Limpa o cache corrompido de tipos do Kotlin e compila o APK de uma só vez
+    # Executa a limpeza e gera o APK utilizando o ambiente corrigido
     - name: Build and Assemble APK
       run: ./gradlew clean assembleDebug
 
