@@ -1,5 +1,6 @@
 <resources>
-    <style name="Theme.CatsBlockPhone" parent="Theme.Material3.Dark.NoActionBar">
+    <!-- Alterado o parent para usar o tema escuro nativo do Android com NoActionBar -->
+    <style name="Theme.CatsBlockPhone" parent="android:Theme.DeviceDefault.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 </resources>
