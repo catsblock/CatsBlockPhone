@@ -20,20 +20,21 @@ jobs:
         distribution: 'temurin'
         java-version: '18'
 
-    # Removemos o bloqueio de versão fixa para que a action use e sincronize a estrutura correta do seu projeto
-    - name: Setup Gradle
+    # Instala o Gradle globalmente de forma limpa na máquina virtual
+    - name: Setup Gradle Global CLI
       uses: gradle/actions/setup-gradle@v3
 
-    # Força a criação limpa do Wrapper no diretório correto do projeto antes da compilação
-    - name: Regenerate local Gradle Wrapper
-      run: gradle wrapper --gradle-version 8.5
+    # Gera a árvore do Wrapper original estruturando o Version Catalog (libs)
+    - name: Generate local Gradle Wrapper
+      run: gradle wrapper
 
+    # Garante a permissão de execução nativa do script gerado
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # Compila e gera o APK utilizando o wrapper recém-validado
+    # Limpa o cache corrompido de tipos do Kotlin e compila o APK de uma só vez
     - name: Build and Assemble APK
-      run: ./gradlew assembleDebug
+      run: ./gradlew clean assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
