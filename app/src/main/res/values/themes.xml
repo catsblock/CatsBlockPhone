@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.CatsBlockPhone" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.CatsBlockPhone" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 </resources>
